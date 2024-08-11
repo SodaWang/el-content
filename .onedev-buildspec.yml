@@ -19,6 +19,13 @@ jobs:
         ls -al
     useTTY: true
     condition: ALL_PREVIOUS_STEPS_WERE_SUCCESSFUL
+  - !PushRepository
+    name: push-to-github
+    remoteUrl: https://github.com/SodaWang/el-content.git
+    userName: soda
+    passwordSecret: code-push
+    force: false
+    condition: ALL_PREVIOUS_STEPS_WERE_SUCCESSFUL
   retryCondition: never
   maxRetries: 3
   retryDelay: 30
