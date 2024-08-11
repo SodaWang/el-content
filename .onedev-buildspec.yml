@@ -1,0 +1,25 @@
+version: 35
+jobs:
+- name: content-deploy
+  jobExecutor: local-executor
+  steps:
+  - !CheckoutStep
+    name: code-checkout
+    cloneCredential: !DefaultCredential {}
+    withLfs: false
+    withSubmodules: false
+    cloneDepth: 1
+    condition: ALL_PREVIOUS_STEPS_WERE_SUCCESSFUL
+  - !CommandStep
+    name: list-of-all
+    runInContainer: false
+    interpreter: !DefaultInterpreter
+      commands: |
+        pwd
+        ls -al
+    useTTY: true
+    condition: ALL_PREVIOUS_STEPS_WERE_SUCCESSFUL
+  retryCondition: never
+  maxRetries: 3
+  retryDelay: 30
+  timeout: 3600
